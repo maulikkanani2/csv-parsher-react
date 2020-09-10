@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UploadFiles() {
+function UploadFiles(props) {
   const inputFile = useRef(null);
   const [files, setfiles] = useState([]);
   const [json, setJson] = useState([]);
@@ -31,7 +31,7 @@ function UploadFiles() {
 
     Papa.parse(fileobj, {
       complete: function (results, file) {
-        console.log("parsing complete read", results, "records.", "file", file);
+        props.setJsonData(results.data);
         setJson(results.data);
       },
     });
@@ -42,7 +42,7 @@ function UploadFiles() {
 
   const onButtonClick = () => {
     inputFile.current.click();
-  }
+  };
 
   return (
     <div>
@@ -51,9 +51,7 @@ function UploadFiles() {
         className={classes.m5}
         style={{ borderStyle: "dotted", borderColor: "#80808080" }}
       >
-        {/* <div> */}
         <Grid container>
-          {/* <Paper elevation={3} className={classes.m5}> */}
           <Grid
             item
             lg={4}
@@ -71,7 +69,7 @@ function UploadFiles() {
               {({ getRootProps, getInputProps }) => (
                 <section>
                   <div {...getRootProps()}>
-                    <input {...getInputProps()} ref={inputFile}/>
+                    <input {...getInputProps()} ref={inputFile} accept=".csv"/>
                     <div className="flex justify-center sm:justify-start flex-wrap">
                       <label htmlFor="button-file">
                         <Icon fontSize="small" color="action">
@@ -90,11 +88,6 @@ function UploadFiles() {
             </Dropzone>
           </Grid>
         </Grid>
-        {json.length > 0 ?
-        <div>
-          <pre>{JSON.stringify(json)}</pre>
-        </div>
-        : null }
       </Paper>
     </div>
   );
