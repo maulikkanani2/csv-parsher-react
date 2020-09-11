@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 30,
   },
   borderRight: {
-    borderRight: "2px solid lightgray",
+    borderRight: "2px solid #80808080"
   },
   py: {
     paddingLeft: 30,
@@ -57,19 +57,28 @@ function UploadFiles(props) {
             lg={4}
             md={4}
             sm={12}
-            className={(classes.borderRight, classes.p5)}
+            className={`${classes.borderRight} ${classes.p5}`}
             style={{ margin: "auto", textAlign: "center" }}
           >
-            <Button variant="contained" color="primary" onClick={onButtonClick}>
-              Upload data from file
-            </Button>
+            <div style={{display: "block"}}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={onButtonClick}
+              >
+                Upload data from file
+              </Button>
+              <div style={{color: "rgba(0, 0, 0, 0.54)"}}>
+                .csv .tsv spreadsheets accepted
+              </div>
+            </div>
           </Grid>
           <Grid item lg={8} md={8} sm={12} className={classes.p5}>
             <Dropzone onDrop={(acceptedFiles) => handledrop(acceptedFiles)}>
               {({ getRootProps, getInputProps }) => (
                 <section>
                   <div {...getRootProps()}>
-                    <input {...getInputProps()} ref={inputFile} accept=".csv"/>
+                    <input {...getInputProps()} ref={inputFile} accept=".csv" />
                     <div className="flex justify-center sm:justify-start flex-wrap">
                       <label htmlFor="button-file">
                         <Icon fontSize="small" color="action">

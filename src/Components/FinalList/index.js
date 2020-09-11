@@ -36,8 +36,8 @@ const FinalList = (props) => {
 
   return (
     <Paper className={classes.m5}>
-      <h3 className={`${classes.p2}`}>Bulk add 10 flatefile test</h3>
-      <div className={`${classes.p2}`}>
+      <h3 className={`${classes.p2}`} style={{ margin: 'auto' }}>Bulk add 10 flatefile test</h3>
+      <div className={`${classes.p2}`} style={{ paddingTop: '0px' }}>
         <FormControlLabel
           control={<Switch />}
           label="Only show rows with Problems"

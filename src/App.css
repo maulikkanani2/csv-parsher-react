@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.MuiStep-root.MuiStep-horizontal.MuiStep-completed span,
+.MuiStep-root.MuiStep-horizontal.MuiStep-completed svg {
+  color: green;
+}
+
+.MuiStepConnector-root {
+  display: none;
+}
+
+.MuiStep-root.MuiStep-horizontal .MuiStepLabel-root::after {
+  content: ">";
+  color: #80808080;
+  padding-left: 10px;
+}
+
+.MuiPaper-root:last-child span::after {
+  display: none;
+}

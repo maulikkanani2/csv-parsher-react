@@ -53,12 +53,11 @@ const DataValidate = (props) => {
     console.log("FinalObj", finalObj);
   }
   return (
-    <Paper className={classes.m5}>
+    <Paper className={classes.m5} style={{marginTop: "0px", marginBottom: "25px"}}>
       <h3 className={`${classes.p2}`}>Bulk add flatefile test</h3>
       {Object.keys(finalObj).length != 0 &&
         Object.entries(finalObj).map((item, index) => {
-          console.log("item bom", item);
-          return <DataCard json={item} />;
+          return <DataCard json={item} key={index}/>;
         })}
     </Paper>
   );

@@ -40,7 +40,7 @@ const DataTableOne = (props) => {
   const classes = useStyles();
   return (
     <Paper className={classes.m5}>
-      <h3 className={`${classes.p2} ${classes.pb0}`}>
+      <h3 className={`${classes.p2} ${classes.pb0}`} style={{ margin: 'auto' }}>
         Bulk add flatefile test
       </h3>
       <Grid container className={classes.p2}>
@@ -50,11 +50,11 @@ const DataTableOne = (props) => {
             <Icon component={ArrowRightAltIcon} />
           </h4>
           <div>
-            <Button variant="contained" style={{backgroundColor: "#7de015", marginRight: 10}}>Yes</Button>
-            <Button variant="contained" style={{backgroundColor: "#000000", color: "#fff"}}>No</Button>
+            <Button variant="contained" style={{backgroundColor: "#5ea712", marginRight: 10, color: "#fff"}} onClick={() => props.stepperVisiblity(true)}>Yes</Button>
+            <Button variant="contained" style={{backgroundColor: "#000000", color: "#fff"}} onClick={() => props.setJsonData([])}>No</Button>
           </div>
           <div style={{marginTop: 25}}>
-            <Button variant="contained" color="default">Go back</Button>
+            <Button variant="contained" style={{backgroundColor: "#828E9C", color: "#fff"}} color="default" onClick={() => props.setJsonData([])}>Go back</Button>
           </div>
         </Grid>
         <Grid item lg={9} md={9} sm={12}>
@@ -62,9 +62,9 @@ const DataTableOne = (props) => {
             <TableContainer component={Paper}>
               <Table size="small">
                 <TableHead style={{ backgroundColor: "lightgray" }}>
-                  <TableRow>
+                  <TableRow style={{borderBottom: '1px solid #80808080'}}>
                     {props.json[0].map((item, index) => {
-                      return <TableCell key={index}>{item}</TableCell>;
+                      return <TableCell key={index} style={{borderRight: '1px solid #80808080'}}>{item}</TableCell>;
                     })}
                   </TableRow>
                 </TableHead>
@@ -72,9 +72,9 @@ const DataTableOne = (props) => {
                   {props.json.map((row, index) => {
                     if (index != 0 && row.length > 1 && index < 2) {
                       return (
-                        <TableRow key={index}>
+                        <TableRow key={index} style={{borderBottom: '1px solid #80808080'}}>
                           {row.map((item, index) => {
-                            return <TableCell key={index}>{item}</TableCell>;
+                            return <TableCell key={index} style={{borderRight: '1px solid #80808080'}}>{item}</TableCell>;
                           })}
                         </TableRow>
                       );
