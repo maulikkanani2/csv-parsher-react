@@ -55,3 +55,7 @@
 .MuiPaper-root:last-child span::after {
   display: none;
 }
+
+.dropzone-container:focus {
+  outline: none;
+}

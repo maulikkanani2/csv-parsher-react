@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 30,
   },
   borderRight: {
-    borderRight: "2px solid #80808080"
+    borderRight: "2px solid #80808080",
   },
   py: {
     paddingLeft: 30,
@@ -46,58 +46,56 @@ function UploadFiles(props) {
 
   return (
     <div>
-      <Paper
-        elevation={3}
-        className={classes.m5}
-        style={{ borderStyle: "dotted", borderColor: "#80808080" }}
-      >
-        <Grid container>
-          <Grid
-            item
-            lg={4}
-            md={4}
-            sm={12}
-            className={`${classes.borderRight} ${classes.p5}`}
-            style={{ margin: "auto", textAlign: "center" }}
-          >
-            <div style={{display: "block"}}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={onButtonClick}
-              >
-                Upload data from file
-              </Button>
-              <div style={{color: "rgba(0, 0, 0, 0.54)"}}>
-                .csv .tsv spreadsheets accepted
+      <Dropzone onDrop={(acceptedFiles) => handledrop(acceptedFiles)}>
+        {({ getRootProps, getInputProps }) => (
+          <section>
+            <div {...getRootProps()} className="dropzone-container">
+              <input {...getInputProps()} ref={inputFile} accept=".csv" />
+              <div className="flex justify-center sm:justify-start flex-wrap dropzone-container">
+                <label htmlFor="button-file"></label>
+                <Paper
+                  elevation={3}
+                  className={classes.m5}
+                  style={{ borderStyle: "dotted", borderColor: "#80808080" }}
+                >
+                  <Grid container>
+                    <Grid
+                      item
+                      lg={4}
+                      md={4}
+                      sm={12}
+                      className={`${classes.borderRight} ${classes.p5}`}
+                      style={{ margin: "auto", textAlign: "center" }}
+                    >
+                      <div style={{ display: "block" }}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={onButtonClick}
+                        >
+                          Upload data from file
+                        </Button>
+                        <div style={{ color: "rgba(0, 0, 0, 0.54)" }}>
+                          .csv .tsv spreadsheets accepted
+                        </div>
+                      </div>
+                    </Grid>
+                    <Grid item lg={8} md={8} sm={12} className={classes.p5}>
+                      <Icon fontSize="small" color="action">
+                        You can upload any .csv, .tsv file with any set Of
+                        columns as long as it has 1 record per row. The next
+                        step will allow you to match your spreadsheet columns to
+                        the right data points, You'll be able to clean up or
+                        remove any corrupted data before finalizing your report.
+                      </Icon>
+                    </Grid>
+                  </Grid>
+                </Paper>
               </div>
             </div>
-          </Grid>
-          <Grid item lg={8} md={8} sm={12} className={classes.p5}>
-            <Dropzone onDrop={(acceptedFiles) => handledrop(acceptedFiles)}>
-              {({ getRootProps, getInputProps }) => (
-                <section>
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} ref={inputFile} accept=".csv" />
-                    <div className="flex justify-center sm:justify-start flex-wrap">
-                      <label htmlFor="button-file">
-                        <Icon fontSize="small" color="action">
-                          You can upload any .csv, .tsv file with any set Of
-                          columns as long as it has 1 record per row. The next
-                          step will allow you to match your spreadsheet columns
-                          to the right data points, You'll be able to clean up
-                          or remove any corrupted data before finalizing your
-                          report.
-                        </Icon>
-                      </label>
-                    </div>
-                  </div>
-                </section>
-              )}
-            </Dropzone>
-          </Grid>
-        </Grid>
-      </Paper>
+          </section>
+        )}
+      </Dropzone>
     </div>
   );
 }

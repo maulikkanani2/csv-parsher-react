@@ -12,11 +12,21 @@ import {
 
 function Home() {
   const [json, setJson] = useState([]);
+  const [confirmJson, setConfirmJson] = useState([]);
+  const [ignoredJson, setIgnoredJson] = useState([]);
   const [activeStep, setActiveStep] = useState(1);
   const [showStepper, setShowStepper] = useState(false);
 
   const setJsonData = (value) => {
     setJson(value);
+  };
+
+  const setConfirmJsonData = (value) => {
+    setConfirmJson([...confirmJson, value]);
+  };
+
+  const setIgnoredJsonData = (value) => {
+    setIgnoredJson([...ignoredJson, value]);
   };
 
   const setStepperVisiblity = (value) => {
@@ -47,16 +57,17 @@ function Home() {
       case 0:
         return "";
       case 1:
-        return <DataValidate json={json} />;
+        return <DataValidate json={json} confirmJson={confirmJson} ignoredJson={ignoredJson} setConfirmJsonData={setConfirmJsonData} setIgnoredJsonData={setIgnoredJsonData} />;
       case 2:
-        return <FinalList json={json} />;
+        return <FinalList json={json} confirmJson={confirmJson} ignoredJson={ignoredJson}/>;
       case 3:
-        return <FinalList json={json} />;
+        return <FinalList json={json} json={json} confirmJson={confirmJson} ignoredJson={ignoredJson}/>;
       default:
         return "Unknown stepIndex";
     }
   };
-  console.log(json);
+  console.log('confirmJson', confirmJson);
+  console.log('ignoredJson', ignoredJson);
   return (
     <div>
       {json.length === 0 ? (
@@ -89,7 +100,7 @@ function Home() {
           <div>
             {activeStep === steps.length ? (
               <div>
-                <FinalList json={json} />
+                <FinalList json={json} json={json} confirmJson={confirmJson} ignoredJson={ignoredJson}/>
                 <Button onClick={handleReset} variant="contained">Reset</Button>
               </div>
             ) : (

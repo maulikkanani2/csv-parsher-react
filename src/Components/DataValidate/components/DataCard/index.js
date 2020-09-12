@@ -35,8 +35,12 @@ const DataCard = (props) => {
   const classes = useStyles();
 
   const onTextChange = (e) => {
-    console.log('onTextChange', e.target.value);
-  }
+    console.log("onTextChange", e.target.value);
+  };
+  console.log(
+    "props.confirmJsonprops.confirmJsonprops.confirmJson",
+    props.confirmJson.includes(props.json)
+  );
   return (
     <Grid container className={classes.p2} style={{ paddingTop: "0" }}>
       <Grid item lg={6} md={6} sm={12}>
@@ -54,8 +58,14 @@ const DataCard = (props) => {
                   {props.json[1].map((row, index) => {
                     return (
                       <TableRow key={index}>
-                        <TableCell style={{width: "1px", backgroundColor: "lightgray"}}>{index+1}</TableCell>
-                        <TableCell contentEditable onChangeCapture={e => onTextChange(e)}>{row}</TableCell>
+                        <TableCell
+                          style={{ width: "1px", backgroundColor: "lightgray" }}
+                        >
+                          {index + 1}
+                        </TableCell>
+                        <TableCell onChangeCapture={(e) => onTextChange(e)}>
+                          {row}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
@@ -92,10 +102,23 @@ const DataCard = (props) => {
           <Button
             variant="contained"
             style={{ backgroundColor: "green", marginRight: 20, color: "#fff" }}
+            onClick={() => props.setConfirmJson(props.json)}
+            disabled={
+              props.confirmJson.includes(props.json) ||
+              props.ignoredJson.includes(props.json)
+            }
           >
             Confirm mapping
           </Button>
-          <Button variant="outlined" color="default">
+          <Button
+            variant="outlined"
+            color="default"
+            onClick={() => props.setConfirmJson(props.json)}
+            disabled={
+              props.confirmJson.includes(props.json) ||
+              props.ignoredJson.includes(props.json)
+            }
+          >
             Ignore this columns
           </Button>
         </div>

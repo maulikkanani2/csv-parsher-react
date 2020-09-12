@@ -36,8 +36,10 @@ const FinalList = (props) => {
 
   return (
     <Paper className={classes.m5}>
-      <h3 className={`${classes.p2}`} style={{ margin: 'auto' }}>Bulk add 10 flatefile test</h3>
-      <div className={`${classes.p2}`} style={{ paddingTop: '0px' }}>
+      <h3 className={`${classes.p2}`} style={{ margin: "auto" }}>
+        Bulk add 10 flatefile test
+      </h3>
+      <div className={`${classes.p2}`} style={{ paddingTop: "0px" }}>
         <FormControlLabel
           control={<Switch />}
           label="Only show rows with Problems"
@@ -48,29 +50,33 @@ const FinalList = (props) => {
       <Grid container className={classes.p2}>
         <Grid item lg={12} md={12} sm={12}>
           <Paper>
-            {props.json.length > 0 ? (
-              <TableContainer component={Paper}>
+            {props.confirmJson.length > 0 ? (
+              <TableContainer component={Paper} style={{ width: 'min-content' }}>
                 <Table size="small">
                   <TableHead style={{ backgroundColor: "lightgray" }}>
-                    <TableRow>
-                      {props.json[0].map((item, index) => {
-                        return <TableCell key={index}>{item}</TableCell>;
+                    <TableBody>
+                      {props.confirmJson.map((item, index) => {
+                        console.log("item", item[0]);
+                        return <TableCell key={index}>{item[0]}</TableCell>;
                       })}
-                    </TableRow>
+                    </TableBody>
                   </TableHead>
-                  <TableBody>
-                    {props.json.map((row, index) => {
-                      if (index != 0 && row.length > 1) {
-                        return (
-                          <TableRow key={index}>
-                            {row.map((item, index) => {
-                              return <TableCell key={index}>{item}</TableCell>;
-                            })}
-                          </TableRow>
-                        );
-                      }
+                  <div style={{display: "flex"}}>
+                    {props.confirmJson.map((item) => {
+                      return (
+                        <TableBody>
+                          {item[1].map((innerItem, innerIndex) => {
+                            return (
+                              <TableRow key={innerIndex}>
+                                {console.log("innerItem", innerItem)}
+                                <TableCell>{innerItem}</TableCell>
+                              </TableRow>
+                            );
+                          })}
+                        </TableBody>
+                      );
                     })}
-                  </TableBody>
+                  </div>
                 </Table>
               </TableContainer>
             ) : null}
