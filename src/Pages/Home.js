@@ -3,18 +3,14 @@ import AddFlateFile from "../Components/AddFlateFile";
 import DataTableOne from "../Components/DataTableOne";
 import DataValidate from "../Components/DataValidate";
 import FinalList from "../Components/FinalList";
-import {
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-} from "@material-ui/core";
+import { Stepper, Step, StepLabel, Button } from "@material-ui/core";
 
 function Home() {
   const [json, setJson] = useState([]);
   const [confirmJson, setConfirmJson] = useState([]);
   const [ignoredJson, setIgnoredJson] = useState([]);
   const [activeStep, setActiveStep] = useState(1);
+  const [changedColumnJson, setChangedColumnJson] = useState({});
   const [showStepper, setShowStepper] = useState(false);
 
   const setJsonData = (value) => {
@@ -57,17 +53,40 @@ function Home() {
       case 0:
         return "";
       case 1:
-        return <DataValidate json={json} confirmJson={confirmJson} ignoredJson={ignoredJson} setConfirmJsonData={setConfirmJsonData} setIgnoredJsonData={setIgnoredJsonData} />;
+        return (
+            <DataValidate
+              json={json}
+              confirmJson={confirmJson}
+              ignoredJson={ignoredJson}
+              setConfirmJsonData={setConfirmJsonData}
+              setIgnoredJsonData={setIgnoredJsonData}
+              changedColumnJson={changedColumnJson}
+              setChangedColumnJson={setChangedColumnJson}
+          />
+        );
       case 2:
-        return <FinalList json={json} confirmJson={confirmJson} ignoredJson={ignoredJson}/>;
+        return (
+          <FinalList
+            json={json}
+            confirmJson={confirmJson}
+            ignoredJson={ignoredJson}
+          />
+        );
       case 3:
-        return <FinalList json={json} json={json} confirmJson={confirmJson} ignoredJson={ignoredJson}/>;
+        return (
+          <FinalList
+            json={json}
+            json={json}
+            confirmJson={confirmJson}
+            ignoredJson={ignoredJson}
+          />
+        );
       default:
         return "Unknown stepIndex";
     }
   };
-  console.log('confirmJson', confirmJson);
-  console.log('ignoredJson', ignoredJson);
+  console.log("confirmJson", confirmJson);
+  console.log("ignoredJson", ignoredJson);
   return (
     <div>
       {json.length === 0 ? (
@@ -100,14 +119,32 @@ function Home() {
           <div>
             {activeStep === steps.length ? (
               <div>
-                <FinalList json={json} json={json} confirmJson={confirmJson} ignoredJson={ignoredJson}/>
-                <Button onClick={handleReset} variant="contained">Reset</Button>
+                <FinalList
+                  json={json}
+                  json={json}
+                  confirmJson={confirmJson}
+                  ignoredJson={ignoredJson}
+                />
+                <Button onClick={handleReset} variant="contained">
+                  Reset
+                </Button>
               </div>
             ) : (
               <div>
                 <div>{getStepContent(activeStep)}</div>
-                <div style={{ marginRight: "90px", marginLeft: "90px", marginBottom: "50px" }}>
-                  <Button disabled={activeStep === 0 || activeStep === 1} variant="contained" onClick={handleBack} style={{marginRight: "30px"}}>
+                <div
+                  style={{
+                    marginRight: "90px",
+                    marginLeft: "90px",
+                    marginBottom: "50px",
+                  }}
+                >
+                  <Button
+                    disabled={activeStep === 0 || activeStep === 1}
+                    variant="contained"
+                    onClick={handleBack}
+                    style={{ marginRight: "30px" }}
+                  >
                     Back
                   </Button>
                   <Button

@@ -1,8 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import {
-  Paper,
-} from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import DataCard from "./components/DataCard";
 
@@ -42,7 +40,7 @@ const DataValidate = (props) => {
         }
       });
     });
-    console.log("FinalObj", finalObj);
+    // console.log("FinalObj", finalObj);
   }
 
   const setConfirmJsonData = (value) => {
@@ -54,11 +52,25 @@ const DataValidate = (props) => {
   };
 
   return (
-    <Paper className={classes.m5} style={{marginTop: "0px", marginBottom: "25px"}}>
+    <Paper
+      className={classes.m5}
+      style={{ marginTop: "0px", marginBottom: "25px" }}
+    >
       <h3 className={`${classes.p2}`}>Bulk add flatefile test</h3>
       {Object.keys(finalObj).length != 0 &&
         Object.entries(finalObj).map((item, index) => {
-          return <DataCard json={item} key={index} confirmJson={props.confirmJson} ignoredJson={props.ignoredJson} setConfirmJson={setConfirmJsonData} setIgnoredJson={setIgnoredJsonData} />;
+          return (
+            <DataCard
+              json={item}
+              key={index}
+              confirmJson={props.confirmJson}
+              ignoredJson={props.ignoredJson}
+              setConfirmJson={setConfirmJsonData}
+              setIgnoredJson={setIgnoredJsonData}
+              changedColumnJson={props.changedColumnJson}
+              setChangedColumnJson={props.setChangedColumnJson}
+            />
+          );
         })}
     </Paper>
   );
