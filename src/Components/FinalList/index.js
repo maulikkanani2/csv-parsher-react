@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import {
   Table,
@@ -13,6 +13,8 @@ import {
   Switch,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import JsonGrid from "react-json-grid"
+
 const useStyles = makeStyles((theme) => ({
   m5: {
     margin: 90,
@@ -32,8 +34,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const FinalList = (props) => {
-  const classes = useStyles();
+  useEffect(()=>{
+    // const finalOutput = [];
+    // const innerList = {};
+    // props.confirmJson.map((item, index)=> {
+    //     const name = item[0];
+    //     item[1].map((innerItem, innerIndex)=>{
 
+    //     })
+    // })
+    console.log('Object.keys(props.confirmJson)', Object.keys(props.confirmJson));
+  },[props.confirmJson])
+  const classes = useStyles();
+  // console.log('props.confirmJson from review section', JSON.stringify(props.confirmJson));
   return (
     <Paper className={classes.m5}>
       <h3 className={`${classes.p2}`} style={{ margin: "auto" }}>
@@ -83,6 +96,7 @@ const FinalList = (props) => {
           </Paper>
         </Grid>
       </Grid>
+      <JsonGrid data={props.confirmJson} onChange={(x,y,objKey,value)=>{ console.log('dkjdskbsdfkjbdsfjb') }}/>
     </Paper>
   );
 };

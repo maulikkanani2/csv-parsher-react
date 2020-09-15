@@ -39,6 +39,8 @@ const DataCard = (props) => {
   const classes = useStyles();
   const [isValid, setIsValid] = useState(true);
   const [isTaken, setIsTaken] = useState("");
+  const [selectedNewColumnName, setSelectedNewColumnName] = useState("");
+  const [isMappingConfirmed, setIsMappingConfirmed] = useState(false);
 
   const filterColors = (inputValue) => {
     return columnNames.filter((i) =>
@@ -54,6 +56,7 @@ const DataCard = (props) => {
     });
 
   const onChangeSelect = (selectedData) => {
+    setSelectedNewColumnName(selectedData)
     let data = props.changedColumnJson;
 
     if (selectedData) {
@@ -80,15 +83,29 @@ const DataCard = (props) => {
         if (_.isEqual(value.sort(), props.json[1].sort())) {
           delete data[key];
           props.setChangedColumnJson({ ...data });
+          setIsValid(true);
         }
       }
     }
   };
 
+  const onCofirmMapping = () => {
+    let data = props.confirmJson;
+    console.log('selectedNewColumnName', selectedNewColumnName);
+    data[selectedNewColumnName.value] = props.json[1];
+    props.setConfirmJson(data);
+    console.log('bhai aava data confirm thashe', data)
+  }
+
   useEffect(() => {
-    // console.log("props.jsonnnnnnnnnnn", props.json);
-    // if()
-  }, [props.changedColumnJson]);
+    for (let [key, value] of Object.entries(props.changedColumnJson)) {
+      if (_.isEqual(value.sort(), props.json[1].sort())) {
+        setIsValid(false);
+      }
+    }
+
+    console.log('props.confirmJson', props.confirmJson);
+  }, [props.changedColumnJson, props.confirmJson]);
 
   return (
     <Grid container className={classes.p2} style={{ paddingTop: "0" }}>
@@ -101,7 +118,6 @@ const DataCard = (props) => {
                   <TableRow>
                     <TableCell></TableCell>
                     <TableCell style={{ display: "flex" }}>
-                      {console.log(props.json)}
                       <div style={{ width: "50%" }}>
                         {Object.entries(props.json)[0][1]}
                       </div>
@@ -179,7 +195,7 @@ const DataCard = (props) => {
               marginRight: 20,
               color: isValid ? "gray" : "#fff",
             }}
-            onClick={() => props.setConfirmJson(props.json)}
+            onClick={() => onCofirmMapping()}
             disabled={isValid}
           >
             Confirm mapping
@@ -187,11 +203,11 @@ const DataCard = (props) => {
           <Button
             variant="outlined"
             color="default"
-            onClick={() => props.setConfirmJson(props.json)}
-            disabled={
-              props.confirmJson.includes(props.json) ||
-              props.ignoredJson.includes(props.json)
-            }
+            // onClick={() => props.setConfirmJson(props.json)}
+            // disabled={
+            //   props.confirmJson.includes(props.json) ||
+            //   props.ignoredJson.includes(props.json)
+            // }
           >
             Ignore this columns
           </Button>

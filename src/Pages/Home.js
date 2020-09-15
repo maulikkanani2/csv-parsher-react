@@ -7,7 +7,7 @@ import { Stepper, Step, StepLabel, Button } from "@material-ui/core";
 
 function Home() {
   const [json, setJson] = useState([]);
-  const [confirmJson, setConfirmJson] = useState([]);
+  const [confirmJson, setConfirmJson] = useState({});
   const [ignoredJson, setIgnoredJson] = useState([]);
   const [activeStep, setActiveStep] = useState(1);
   const [changedColumnJson, setChangedColumnJson] = useState({});
@@ -18,7 +18,7 @@ function Home() {
   };
 
   const setConfirmJsonData = (value) => {
-    setConfirmJson([...confirmJson, value]);
+    setConfirmJson(value);
   };
 
   const setIgnoredJsonData = (value) => {
@@ -68,7 +68,7 @@ function Home() {
         return (
           <FinalList
             json={json}
-            confirmJson={confirmJson}
+            confirmJson={Object.entries(confirmJson)}
             ignoredJson={ignoredJson}
           />
         );
@@ -76,8 +76,7 @@ function Home() {
         return (
           <FinalList
             json={json}
-            json={json}
-            confirmJson={confirmJson}
+            confirmJson={Object.entries(confirmJson)}
             ignoredJson={ignoredJson}
           />
         );
@@ -85,8 +84,8 @@ function Home() {
         return "Unknown stepIndex";
     }
   };
-  console.log("confirmJson", confirmJson);
-  console.log("ignoredJson", ignoredJson);
+  // console.log("confirmJson", confirmJson);
+  // console.log("ignoredJson", ignoredJson);
   return (
     <div>
       {json.length === 0 ? (
@@ -121,8 +120,7 @@ function Home() {
               <div>
                 <FinalList
                   json={json}
-                  json={json}
-                  confirmJson={confirmJson}
+                  confirmJson={Object.entries(confirmJson)}
                   ignoredJson={ignoredJson}
                 />
                 <Button onClick={handleReset} variant="contained">
