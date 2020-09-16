@@ -9,12 +9,13 @@ function Home() {
   const [json, setJson] = useState([]);
   const [confirmJson, setConfirmJson] = useState({});
   const [ignoredJson, setIgnoredJson] = useState([]);
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
   const [changedColumnJson, setChangedColumnJson] = useState({});
-  const [showStepper, setShowStepper] = useState(false);
+  const [showStepper, setShowStepper] = useState(true);
 
   const setJsonData = (value) => {
     setJson(value);
+    setShowStepper(true);
   };
 
   const setConfirmJsonData = (value) => {
@@ -25,8 +26,8 @@ function Home() {
     setIgnoredJson([...ignoredJson, value]);
   };
 
-  const setStepperVisiblity = (value) => {
-    setShowStepper(value);
+  const setToTheNextStep = (value) => {
+    setActiveStep(value);
   };
 
   const handleNext = () => {
@@ -47,28 +48,42 @@ function Home() {
     return ["Upload", "Match", "Review", "Complete"];
   };
   const steps = getSteps();
+  const FirstComp = () => {
+    if (json.length === 0) {
+      return <AddFlateFile setJsonData={setJsonData} />;
+    }
+    if (json.length > 0) {
+      return (
+        <DataTableOne
+          json={json}
+          setToTheNextStep={setToTheNextStep}
+          setJsonData={setJsonData}
+        />
+      );
+    }
+  };
 
   const getStepContent = (stepIndex) => {
     switch (stepIndex) {
       case 0:
-        return "";
+        return <FirstComp />;
       case 1:
         return (
-            <DataValidate
-              json={json}
-              confirmJson={confirmJson}
-              ignoredJson={ignoredJson}
-              setConfirmJsonData={setConfirmJsonData}
-              setIgnoredJsonData={setIgnoredJsonData}
-              changedColumnJson={changedColumnJson}
-              setChangedColumnJson={setChangedColumnJson}
+          <DataValidate
+            json={json}
+            confirmJson={confirmJson}
+            ignoredJson={ignoredJson}
+            setConfirmJsonData={setConfirmJsonData}
+            setIgnoredJsonData={setIgnoredJsonData}
+            changedColumnJson={changedColumnJson}
+            setChangedColumnJson={setChangedColumnJson}
           />
         );
       case 2:
         return (
           <FinalList
             json={json}
-            confirmJson={Object.entries(confirmJson)}
+            confirmJson={Object.entries(changedColumnJson)}
             ignoredJson={ignoredJson}
           />
         );
@@ -76,7 +91,7 @@ function Home() {
         return (
           <FinalList
             json={json}
-            confirmJson={Object.entries(confirmJson)}
+            confirmJson={Object.entries(changedColumnJson)}
             ignoredJson={ignoredJson}
           />
         );
@@ -84,21 +99,8 @@ function Home() {
         return "Unknown stepIndex";
     }
   };
-  // console.log("confirmJson", confirmJson);
-  // console.log("ignoredJson", ignoredJson);
   return (
     <div>
-      {json.length === 0 ? (
-        <AddFlateFile setJsonData={setJsonData} />
-      ) : !showStepper ? (
-        <DataTableOne
-          json={json}
-          stepperVisiblity={setStepperVisiblity}
-          setJsonData={setJsonData}
-        />
-      ) : null}
-
-      {showStepper ? (
         <div>
           <Stepper
             activeStep={activeStep}
@@ -120,7 +122,7 @@ function Home() {
               <div>
                 <FinalList
                   json={json}
-                  confirmJson={Object.entries(confirmJson)}
+                  confirmJson={Object.entries(changedColumnJson)}
                   ignoredJson={ignoredJson}
                 />
                 <Button onClick={handleReset} variant="contained">
@@ -135,10 +137,12 @@ function Home() {
                     marginRight: "90px",
                     marginLeft: "90px",
                     marginBottom: "50px",
+                    textAlign: "right",
+                    fontSize: 'larger'
                   }}
                 >
                   <Button
-                    disabled={activeStep === 0 || activeStep === 1}
+                    disabled={activeStep === 0}
                     variant="contained"
                     onClick={handleBack}
                     style={{ marginRight: "30px" }}
@@ -149,6 +153,7 @@ function Home() {
                     variant="contained"
                     color="primary"
                     onClick={handleNext}
+                    disabled={json.length === 0}
                   >
                     {activeStep === steps.length - 1 ? "Finish" : "Next"}
                   </Button>
@@ -157,9 +162,6 @@ function Home() {
             )}
           </div>
         </div>
-      ) : null}
-      {/* <DataValidate json={json} /> */}
-      {/* <FinalList json={json} /> */}
     </div>
   );
 }

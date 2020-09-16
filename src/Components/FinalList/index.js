@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import {
   Table,
@@ -13,7 +13,7 @@ import {
   Switch,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import JsonGrid from "react-json-grid"
+import JsonGrid from "react-json-grid";
 
 const useStyles = makeStyles((theme) => ({
   m5: {
@@ -34,19 +34,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const FinalList = (props) => {
-  useEffect(()=>{
-    // const finalOutput = [];
-    // const innerList = {};
-    // props.confirmJson.map((item, index)=> {
-    //     const name = item[0];
-    //     item[1].map((innerItem, innerIndex)=>{
+  const [data, setData] = useState([]);
 
-    //     })
-    // })
-    console.log('Object.keys(props.confirmJson)', Object.keys(props.confirmJson));
-  },[props.confirmJson])
+  const OnCellChange = (x, y, objKey, value) => {
+    let newData = data;
+    newData[y][objKey] = value;
+    setData([...newData]);
+  };
+
+  useEffect(() => {
+    let finalarr = [];
+
+    props.confirmJson.forEach((item) => {
+      item[1].forEach((inneritem, innerindex) =>
+        !finalarr.length
+          ? finalarr.push({ [item[0]]: inneritem })
+          : (finalarr[innerindex] = {
+              ...finalarr[innerindex],
+              [item[0]]: inneritem,
+            })
+      );
+    });
+    setData(finalarr);
+  }, [props.confirmJson]);
   const classes = useStyles();
-  // console.log('props.confirmJson from review section', JSON.stringify(props.confirmJson));
   return (
     <Paper className={classes.m5}>
       <h3 className={`${classes.p2}`} style={{ margin: "auto" }}>
@@ -63,40 +74,15 @@ const FinalList = (props) => {
       <Grid container className={classes.p2}>
         <Grid item lg={12} md={12} sm={12}>
           <Paper>
-            {props.confirmJson.length > 0 ? (
-              <TableContainer component={Paper} style={{ width: 'min-content' }}>
-                <Table size="small">
-                  <TableHead style={{ backgroundColor: "lightgray" }}>
-                    <TableBody>
-                      {props.confirmJson.map((item, index) => {
-                        console.log("item", item[0]);
-                        return <TableCell key={index}>{item[0]}</TableCell>;
-                      })}
-                    </TableBody>
-                  </TableHead>
-                  <div style={{display: "flex"}}>
-                    {props.confirmJson.map((item) => {
-                      return (
-                        <TableBody>
-                          {item[1].map((innerItem, innerIndex) => {
-                            return (
-                              <TableRow key={innerIndex}>
-                                {console.log("innerItem", innerItem)}
-                                <TableCell>{innerItem}</TableCell>
-                              </TableRow>
-                            );
-                          })}
-                        </TableBody>
-                      );
-                    })}
-                  </div>
-                </Table>
-              </TableContainer>
-            ) : null}
+            <JsonGrid
+              data={data}
+              onChange={(x, y, objKey, value) => {
+                OnCellChange(x, y, objKey, value);
+              }}
+            />
           </Paper>
         </Grid>
       </Grid>
-      <JsonGrid data={props.confirmJson} onChange={(x,y,objKey,value)=>{ console.log('dkjdskbsdfkjbdsfjb') }}/>
     </Paper>
   );
 };

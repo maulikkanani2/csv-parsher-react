@@ -50,7 +50,7 @@ const DataTableOne = (props) => {
             <Icon component={ArrowRightAltIcon} />
           </h4>
           <div>
-            <Button variant="contained" style={{backgroundColor: "#5ea712", marginRight: 10, color: "#fff"}} onClick={() => props.stepperVisiblity(true)}>Yes</Button>
+            <Button variant="contained" style={{backgroundColor: "#5ea712", marginRight: 10, color: "#fff"}} onClick={() => props.setToTheNextStep(1)}>Yes</Button>
             <Button variant="contained" style={{backgroundColor: "#000000", color: "#fff"}} onClick={() => props.setJsonData([])}>No</Button>
           </div>
           <div style={{marginTop: 25}}>

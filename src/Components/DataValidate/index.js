@@ -40,7 +40,6 @@ const DataValidate = (props) => {
         }
       });
     });
-    // console.log("FinalObj", finalObj);
   }
 
   const setConfirmJsonData = (value) => {
@@ -63,10 +62,10 @@ const DataValidate = (props) => {
             <DataCard
               json={item}
               key={index}
-              confirmJson={props.confirmJson}
-              ignoredJson={props.ignoredJson}
-              setConfirmJson={setConfirmJsonData}
-              setIgnoredJson={setIgnoredJsonData}
+              // confirmJson={props.confirmJson}
+              // ignoredJson={props.ignoredJson}
+              // setConfirmJson={setConfirmJsonData}
+              // setIgnoredJson={setIgnoredJsonData}
               changedColumnJson={props.changedColumnJson}
               setChangedColumnJson={props.setChangedColumnJson}
             />

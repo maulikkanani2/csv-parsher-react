@@ -56,9 +56,8 @@ function UploadFiles(props) {
                 <Paper
                   elevation={3}
                   className={classes.m5}
-                  style={{ borderStyle: "dotted", borderColor: "#80808080" }}
                 >
-                  <Grid container>
+                  <Grid container style={{ borderStyle: "dotted", borderColor: "#80808080" }}>
                     <Grid
                       item
                       lg={4}

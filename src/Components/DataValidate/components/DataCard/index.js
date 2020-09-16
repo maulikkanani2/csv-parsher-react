@@ -39,8 +39,7 @@ const DataCard = (props) => {
   const classes = useStyles();
   const [isValid, setIsValid] = useState(true);
   const [isTaken, setIsTaken] = useState("");
-  const [selectedNewColumnName, setSelectedNewColumnName] = useState("");
-  const [isMappingConfirmed, setIsMappingConfirmed] = useState(false);
+  const [selectedNewColumnName, setSelectedNewColumnName] = useState({});
 
   const filterColors = (inputValue) => {
     return columnNames.filter((i) =>
@@ -56,7 +55,7 @@ const DataCard = (props) => {
     });
 
   const onChangeSelect = (selectedData) => {
-    setSelectedNewColumnName(selectedData)
+    setSelectedNewColumnName(selectedData);
     let data = props.changedColumnJson;
 
     if (selectedData) {
@@ -68,19 +67,10 @@ const DataCard = (props) => {
           `${selectedData.value} has already been taken by some other field`
         );
       }
-
-      // if(data[selectedData.value]){
-      //   if(!_.isEqual(data[selectedData.value].sort(), props.json[1].sort())){
-      //     // delete data[selectedData.value]
-      //     console.log(data)
-      //     data[selectedData.value] = props.json[1];
-      //     props.setChangedColumnJson({ ...data });
-      //   }
-      // }
     } else {
       setIsTaken("");
       for (let [key, value] of Object.entries(props.changedColumnJson)) {
-        if (_.isEqual(value.sort(), props.json[1].sort())) {
+        if (_.isEqual(value, props.json[1])) {
           delete data[key];
           props.setChangedColumnJson({ ...data });
           setIsValid(true);
@@ -89,23 +79,16 @@ const DataCard = (props) => {
     }
   };
 
-  const onCofirmMapping = () => {
-    let data = props.confirmJson;
-    console.log('selectedNewColumnName', selectedNewColumnName);
-    data[selectedNewColumnName.value] = props.json[1];
-    props.setConfirmJson(data);
-    console.log('bhai aava data confirm thashe', data)
-  }
-
   useEffect(() => {
     for (let [key, value] of Object.entries(props.changedColumnJson)) {
-      if (_.isEqual(value.sort(), props.json[1].sort())) {
+      if (_.isEqual(value, props.json[1])) {
+        setSelectedNewColumnName({ value: `${key}`, label: `${key}` });
+        console.log({ value: key, label: key });
         setIsValid(false);
       }
     }
-
-    console.log('props.confirmJson', props.confirmJson);
-  }, [props.changedColumnJson, props.confirmJson]);
+    console.log("selectedNewColumnName", selectedNewColumnName.length);
+  }, []);
 
   return (
     <Grid container className={classes.p2} style={{ paddingTop: "0" }}>
@@ -169,10 +152,6 @@ const DataCard = (props) => {
         }}
       >
         <Typography>
-          <Done style={{ color: "green" }} />
-          Matched to the Name Fields
-        </Typography>
-        <Typography>
           <Info style={{ color: "lightgray" }} />
           100% of yours rows have a value for this columns
         </Typography>
@@ -187,31 +166,6 @@ const DataCard = (props) => {
             {isTaken}
           </Typography>
         )}
-        <div style={{ marginTop: 20 }}>
-          <Button
-            variant="contained"
-            style={{
-              backgroundColor: isValid ? "#eaeff5" : "green",
-              marginRight: 20,
-              color: isValid ? "gray" : "#fff",
-            }}
-            onClick={() => onCofirmMapping()}
-            disabled={isValid}
-          >
-            Confirm mapping
-          </Button>
-          <Button
-            variant="outlined"
-            color="default"
-            // onClick={() => props.setConfirmJson(props.json)}
-            // disabled={
-            //   props.confirmJson.includes(props.json) ||
-            //   props.ignoredJson.includes(props.json)
-            // }
-          >
-            Ignore this columns
-          </Button>
-        </div>
       </Grid>
     </Grid>
   );
