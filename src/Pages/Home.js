@@ -12,7 +12,7 @@ function Home() {
   const [json, setJson] = useState([]);
   const [confirmJson, setConfirmJson] = useState({});
   const [ignoredJson, setIgnoredJson] = useState([]);
-  const [activeStep, setActiveStep] = useState(4);
+  const [activeStep, setActiveStep] = useState(0);
   const [changedColumnJson, setChangedColumnJson] = useState({});
   const [finalJson, setFinalJson] = useState({});
   const [showStepper, setShowStepper] = useState(true);
