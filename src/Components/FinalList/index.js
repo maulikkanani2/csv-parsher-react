@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   Paper,
-  FormGroup,
   FormControlLabel,
   Switch,
 } from "@material-ui/core";
@@ -40,6 +33,7 @@ const FinalList = (props) => {
     let newData = data;
     newData[y][objKey] = value;
     setData([...newData]);
+    //   props.setFinalJson([...newData]);
   };
 
   useEffect(() => {
@@ -56,6 +50,8 @@ const FinalList = (props) => {
       );
     });
     setData(finalarr);
+    // props.setFinalJson(finalarr);
+    console.log("its reloading every time");
   }, [props.confirmJson]);
   const classes = useStyles();
   return (
