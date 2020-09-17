@@ -126,8 +126,8 @@ function Home() {
           {activeStep === steps.length ? (
             <div>
               <FinishButton>
-                <div style={{ height: "72px" }}>
-                  <Button onClick={handleReset} variant="contained">
+                <div style={{ height: "72px", textAlign: "center" }}>
+                  <Button onClick={handleReset} variant="contained" style={{marginTop: "18px"}}>
                     Reset
                   </Button>
                 </div>
